@@ -1,0 +1,25 @@
+:root{
+  --primary-color: #ffffff;
+
+  --Libre-Regular: 'LibreBaskervilleRegular',sans-serif;
+  --Libre-Bold: 'LibreBaskervilleBold',sans-serif;
+
+
+  --fs-28: 1.8rem;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: LibreBaskervilleRegular;
+  src: url('../public/fonts/LibreBaskerville-Regular.ttf');
+}
+
+@font-face {
+  font-family: LibreBaskervilleBold;
+  src: url('../public/fonts/LibreBaskerville-Bold.ttf');
+}

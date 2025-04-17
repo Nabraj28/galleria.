@@ -1,0 +1,28 @@
+.headerContainer{
+    width: 100%;
+    background-color: var(--primary-color);
+    height: 5rem;
+    box-shadow: 0 2px 1px -2px;
+    margin-bottom: 2.5rem;
+    display: flex;
+    place-items: center;
+    place-content: center;
+}
+
+.headerContentWrapper{
+    width: 100%;
+    max-width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerContentWrapper h1{
+    font-size: var(--fs-28);
+    font-family: var(--Libre-Regular), serif;
+}
+
+.iconStyle{
+    width: 25px;
+    height: 25px;
+    color: dimgray;
+}
