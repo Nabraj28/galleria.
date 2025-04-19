@@ -4,3 +4,71 @@
     justify-content: center;
 }
 
+.imageItemsContainer {
+    width: 100%;
+    max-width: 90%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.imageItem {
+    width: 95%;
+    position: relative;
+    border-radius: 1rem;
+    height: calc(10rem + 25vh);
+    place-self:  center;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 1rem;
+}
+
+.contentContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    display: flex;
+    align-items: end;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+    font-size: calc(1rem + .2vw);
+    font-family: var(--Libre-Regular),sans-serif;
+}
+
+.imageItem:hover .image{
+    scale: 1.1;
+}
+
+@media (min-width: 576px) {
+    .imageItemsContainer{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .imageItem {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1000px){
+    .imageItemsContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px ) {
+    .imageItemsContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+

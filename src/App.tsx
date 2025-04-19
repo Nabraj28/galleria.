@@ -1,9 +1,12 @@
-import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router'
-import AppLayout from './Layout/AppLayout'
-import Home from './Pages/Home'
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import AppLayout from './Layout/AppLayout';
+import Home from './Pages/Home';
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const App: React.FunctionComponent = () => {
+
+  const queryClient = new QueryClient();
 
   const router = createBrowserRouter([
     {
@@ -19,9 +22,11 @@ const App: React.FunctionComponent = () => {
   ])
 
   return (
-    <RouterProvider router={router}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}>
 
-    </RouterProvider>
+      </RouterProvider>
+      </QueryClientProvider>
   )
 }
 
