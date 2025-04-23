@@ -8,7 +8,7 @@ const Header: React.FunctionComponent = () => {
         <header className={styles.headerContainer}>
             <section className={styles.headerContentWrapper}>
                 <h1>galleria.</h1>
-                <NavLink to={'/'}>
+                <NavLink to={'/slideshow'}>
                     <LuImagePlay className={styles.iconStyle} />
                 </NavLink>
             </section>

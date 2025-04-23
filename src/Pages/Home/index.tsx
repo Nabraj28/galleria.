@@ -13,23 +13,22 @@ const Home: React.FunctionComponent = () => {
 
     return (
         <section className={styles.homeContainer}>
-
              <div className={styles.imageItemsContainer}>
                  {
                      data?.map((artwork,index) => (
-                         <NavLink to='/' key={index} className={styles.imageItem}>
+                         <NavLink to={`/artwork/${artwork.id}`} key={index} className={styles.imageItem}>
                                 <img
                                     className={styles.image}
                                     src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                                    alt={artwork.title}
+                                    alt={""}
                                 />
                                 <div className={styles.contentContainer}>
                                     <h3>{artwork.title}</h3>
+                                    <p>{artwork.artist_title}</p>
                                 </div>
                          </NavLink>
                      ))
                  }
-
              </div>
         </section>
     );

@@ -17,3 +17,6 @@ npm run dev
 ## Technology Used
 * React.js
 * React Router
+* Axios
+* Tanstack Query
+* Custom Hooks

@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import AppLayout from './Layout/AppLayout';
 import Home from './Pages/Home';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import ArtWork from "@/Pages/ArtWork";
+import SlideShow from "@/Pages/SlideShow";
 
 const App: React.FunctionComponent = () => {
 
@@ -16,6 +18,14 @@ const App: React.FunctionComponent = () => {
         {
           index: true,
           element: <Home />
+        },
+        {
+          path: '/artwork/:id',
+          element: <ArtWork />
+        },
+        {
+          path: '/slideshow',
+          element: <SlideShow/>
         }
       ]
     }
@@ -23,9 +33,7 @@ const App: React.FunctionComponent = () => {
 
   return (
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router}>
-
-      </RouterProvider>
+        <RouterProvider router={router}></RouterProvider>
       </QueryClientProvider>
   )
 }
