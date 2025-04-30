@@ -16,10 +16,10 @@
 
 @font-face {
   font-family: LibreBaskervilleRegular;
-  src: url('../public/fonts/LibreBaskerville-Regular.ttf');
+  src: url('/fonts/LibreBaskerville-Regular.ttf');
 }
 
 @font-face {
   font-family: LibreBaskervilleBold;
-  src: url('../public/fonts/LibreBaskerville-Bold.ttf');
+  src: url('/fonts/LibreBaskerville-Bold.ttf');
 }

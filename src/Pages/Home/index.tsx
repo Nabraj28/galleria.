@@ -2,20 +2,26 @@ import React from "react";
 import styles from "./Home.module.css";
 import {NavLink} from "react-router";
 import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks.ts";
+import Loader from "@/Components/Loader";
 
 
 const Home: React.FunctionComponent = () => {
 
     const {data, isLoading, error} = useGetArtWorks();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <Loader/>;
     if (error) return <div>Error...</div>;
+
+
+    console.log(data);
+
+
 
     return (
         <section className={styles.homeContainer}>
              <div className={styles.imageItemsContainer}>
-                 {
-                     data?.map((artwork,index) => (
+                 {Array.isArray(data?.data) &&
+                     data.data.map((artwork, index) => (
                          <NavLink to={`/artwork/${artwork.id}`} key={index} className={styles.imageItem}>
                                 <img
                                     className={styles.image}

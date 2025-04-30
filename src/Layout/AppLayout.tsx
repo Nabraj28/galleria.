@@ -4,10 +4,10 @@ import { Outlet } from 'react-router'
 
 const AppLayout: React.FunctionComponent = () => {
     return (
-        <>
+        <React.Fragment>
             <Header />
             <Outlet />
-        </>
+        </React.Fragment>
     )
 }
 
