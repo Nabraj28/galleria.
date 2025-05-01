@@ -20,7 +20,7 @@ interface configType{
     website_url: string;
 }
 
- interface dataType{
+interface dataType{
     id: string;
     title: string;
     description: string;
@@ -33,11 +33,32 @@ interface configType{
 }
 
 
+export interface singleArtworkType{
+    pagination: paginationType;
+    info: infoType;
+    config: configType;
+    data: dataType;
+}
+
+
 export interface artWorksType{
     pagination: paginationType;
     info: infoType;
     config: configType;
-    data: dataType[] | dataType;
+    data: dataType[];
+}
+
+export interface ArtWorkProps {
+
+    id?: string | undefined;
+    title?: string | undefined;
+    description?: string | undefined;
+    artist_title?: string | undefined;
+    date_end?: number | undefined;
+    publication_history?: string | undefined;
+    exhibition_history?: string | undefined;
+    provenance_text?: string | undefined;
+    image_id?: string | undefined;
 }
 
 

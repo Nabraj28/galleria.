@@ -1,8 +1,9 @@
 .homeContainer {
     width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
     padding: 3rem 0;
+    flex-direction: column;
 }
 
 .imageItemsContainer {
