@@ -15,8 +15,10 @@ const Home: React.FunctionComponent = () => {
     if (isLoading) return <Loader />;
     if (error) return <div>Error...</div>;
 
-    const handleNavigation = (url: string | undefined) => {
-        if (url) setUrl(url);
+    const handleNavigation = (url?: string) => {
+      if(url){
+          setUrl(url);
+      }
     }
 
     return (
