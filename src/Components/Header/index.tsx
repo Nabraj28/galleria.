@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './Header.module.css';
 import { NavLink } from "react-router";
 import { LuImagePlay } from "react-icons/lu";
-import usePlayPauseStore from "@/data/store/playPauseStore";
-import useTimerStore from "@/data/store/timerStore";
+import usePlayPauseStore from "@/data/store/usePlayPauseStore";
+import useTimerStore from "@/data/store/useTimerStore";
+
 
 const Header: React.FunctionComponent = () => {
 

@@ -1,7 +1,7 @@
 import styles from "@/Components/ArtWork/Artwork.module.css";
 import React from "react";
 import { ArtWorkProps } from "@/data/Interfaces";
-import useImageViewStore from "@/data/store/imageViewStore";
+import useImageViewStore from "@/data/store/useImageViewStore";
 
 const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, description, date_end, publication_history, provenance_text, exhibition_history, image_id }: ArtWorkProps) => {
 

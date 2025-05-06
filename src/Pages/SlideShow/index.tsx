@@ -5,9 +5,9 @@ import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks";
 import { RxTrackPrevious, RxTrackNext } from "react-icons/rx";
 import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
 import styles from "./SlideShow.module.css";
-import useSlideShowIndexStore from "@/data/store/slideShowIndexStore";
-import usePlayPauseStore from "@/data/store/playPauseStore";
-import useTimerStore from "@/data/store/timerStore";
+import useSlideShowIndexStore from "@/data/store/useSlideShowIndexStore";
+import usePlayPauseStore from "@/data/store/usePlayPauseStore";
+import useTimerStore from "@/data/store/useTimerStore";
 
 const SlideShow: React.FunctionComponent = () => {
 

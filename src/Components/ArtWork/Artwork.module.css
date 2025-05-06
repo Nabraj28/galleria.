@@ -26,7 +26,7 @@
     height: calc(10rem + 25vh);
     background-size: cover;
     border-radius: 1rem;
-    background-position: center;
+    background-position: center top;
 }
 
 .titleContainer {
