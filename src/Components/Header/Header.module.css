@@ -16,9 +16,18 @@
     justify-content: space-between;
     align-items: center;
 }
-.headerContentWrapper h1{
+.headerText{
     font-size: var(--fs-28);
     font-family: var(--Libre-Regular), serif;
+    color: black;
+    text-decoration: none;
+}
+
+.timer{
+    text-decoration: none;
+    color: #767676;
+    font-size: calc(1rem + .2vw);
+    font-family: var(--Libre-Regular),sans-serif;
 }
 
 .iconStyle{

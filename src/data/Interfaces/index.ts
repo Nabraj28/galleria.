@@ -1,4 +1,4 @@
-interface paginationType{
+interface paginationType {
     total: number;
     limit: number;
     offset: number;
@@ -9,18 +9,18 @@ interface paginationType{
 }
 
 
-interface infoType{
+interface infoType {
     license_text: string;
     license_links: string[];
     version: string;
 }
 
-interface configType{
+interface configType {
     iiif_url: string;
     website_url: string;
 }
 
-interface dataType{
+interface dataType {
     id: string;
     title: string;
     description: string;
@@ -33,7 +33,7 @@ interface dataType{
 }
 
 
-export interface singleArtworkType{
+export interface singleArtworkType {
     pagination: paginationType;
     info: infoType;
     config: configType;
@@ -41,7 +41,7 @@ export interface singleArtworkType{
 }
 
 
-export interface artWorksType{
+export interface artWorksType {
     pagination: paginationType;
     info: infoType;
     config: configType;

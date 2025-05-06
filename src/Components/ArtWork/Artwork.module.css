@@ -2,7 +2,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 0 0 3rem 0;
+    padding-bottom: 3rem;
+    /*position: relative;*/
 }
 
 .artWorkContainer {
@@ -10,55 +11,27 @@
     max-width: 90%;
     display: grid;
     grid-template-columns: 1fr;
-    min-height: 80vh;
-    gap: 3rem;
+    min-height: 70vh;
+    justify-content: center;
 }
 
 .imageContainer {
     position: relative;
     width: 100%;
     overflow: hidden;
-    max-height: 80vh;
 }
 
 .imageBackground {
-    position: absolute;
     width: 100%;
-    height: 100%;
+    height: calc(10rem + 25vh);
     background-size: cover;
-    clip-path: polygon(
-            0% 0%,
-            50% 0%,
-            50% 50%,
-            100% 50%,
-            100% 100%,
-            0% 100%
-    );
+    border-radius: 1rem;
+    background-position: center;
 }
-
 
 .titleContainer {
-    position: absolute;
-    top:0;
-    right: 0;
-    width: 45%;
-    z-index: 2;
-    text-align: right;
-}
-
-
-.viewImageButton{
-    position: absolute;
-    bottom: 5%;
-    left: 5%;
-    padding: 1rem 2rem;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border:none;
-    font-family: var(--Libre-Regular),sans-serif;
-    display: flex;
-    gap: 1rem;
-    cursor: pointer;
+    display: block;
+    padding: 1rem 0;
 }
 
 .titleContainer h1 {
@@ -77,27 +50,91 @@
     position: relative;
 }
 
-.dateStyle{
+.dateStyle {
     color: #d8d8d8;
     font-size: calc(5rem + 5vw);
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
     z-index: 0;
 }
 
-.description{
+.description {
+    font-family: var(--Libre-Regular), sans-serif;
+    color: #767676;
+    padding-top: calc(5rem + 3vw);
     z-index: 99;
     position: relative;
-    font-family: var(--Libre-Regular),sans-serif;
-    color: #767676;
-    padding-top:  calc(5rem + 3vw) ;
-    padding-left: 8rem;
+}
 
+.viewImageButton {
+    display: none;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-family: var(--Libre-Regular), sans-serif;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.fullimageContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.fullimageContainer img {
+    max-width: 90%;
+    max-height: 90%;
 }
 
 @media (min-width: 1000px) {
     .artWorkContainer {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .imageBackground {
+        width: 90%;
+        height: 100%;
+        min-height: 70vh;
+        clip-path: polygon(
+                0% 0%,
+                50% 0%,
+                50% 50%,
+                100% 50%,
+                100% 100%,
+                0% 100%
+        );
+    }
+
+    .titleContainer {
+        position: absolute;
+        top: 0;
+        right: 10%;
+        width: 45%;
+        z-index: 2;
+        text-align: right;
+    }
+
+    .viewImageButton {
+        display: flex;
+    }
+
+    .description {
+        padding-left: 8rem;
+    }
+
 }

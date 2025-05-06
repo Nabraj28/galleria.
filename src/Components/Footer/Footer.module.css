@@ -1,0 +1,16 @@
+.footerWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.footerContainer {
+    width: 100%;
+    max-width: 90%;
+}
+
+.footerText {
+    font-size: calc(1rem + .2vw);
+    font-family: var(--Libre-Regular),sans-serif;
+    padding: 1rem 0;
+}
