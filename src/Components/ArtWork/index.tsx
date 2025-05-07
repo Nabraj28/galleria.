@@ -2,10 +2,13 @@ import styles from "@/Components/ArtWork/Artwork.module.css";
 import React from "react";
 import { ArtWorkProps } from "@/data/Interfaces";
 import useImageViewStore from "@/data/store/useImageViewStore";
+import useTextToggleStore from "@/data/store/useTextToggleStore";
+import { GoScreenFull } from "react-icons/go";
 
 const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, description, date_end, publication_history, provenance_text, exhibition_history, image_id }: ArtWorkProps) => {
 
     const { isImageOpen, setIsImageOpen } = useImageViewStore();
+    const { isTextShown, setIsTextShown } = useTextToggleStore();
 
     const Description = description && description.length > 0
         ? description
@@ -14,9 +17,14 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, d
             : exhibition_history && exhibition_history.length > 0
                 ? provenance_text : 'No description available';
 
-    const descriptionText = Description && (Description.length > 1000 ? Description?.slice(0, 1000) + '... Read More' : Description).replace(/<\/?p>/g, '').
-        replace(/<\/?em>/g, '');
+    const cleanDescription = Description?.replace(/<\/?p>/g, '').replace(/<\/?em>/g, '');
+    const descriptionText = cleanDescription && (isTextShown || cleanDescription.length <= 1000
+        ? cleanDescription
+        : `${cleanDescription.slice(0, 1000)}...`);
 
+    const toggleReadMore = () => {
+        setIsTextShown(!isTextShown);
+    };
 
     return (
         <section className={styles.artWorkWrapper}>
@@ -32,7 +40,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, d
                         <span>{artist_title}</span>
                     </div>
                     <button className={styles.viewImageButton} onClick={() => setIsImageOpen(!isImageOpen)}>
-                        View Image
+                       <GoScreenFull color={'white'} size={25}/> View Image
                     </button>
                 </div>
 
@@ -40,6 +48,14 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, d
                     <p className={styles.dateStyle}>{date_end}</p>
                     <p className={styles.description}>
                         {descriptionText}
+                        {cleanDescription && cleanDescription.length > 1000 && (
+                            <span
+                                onClick={toggleReadMore}
+                                className={styles.readMore}
+                            >
+                                {isTextShown ? 'Show Less' : 'Read More'}
+                            </span>
+                        )}
                     </p>
                 </div>
 

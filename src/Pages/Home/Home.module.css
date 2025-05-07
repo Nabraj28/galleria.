@@ -74,7 +74,7 @@
     border: none;
     border-radius: 1rem;
     cursor: pointer;
-    background-color: var(--primary-color);
+    background-color: #e1e1e1;
 
     &:disabled{
         opacity: 0.5;

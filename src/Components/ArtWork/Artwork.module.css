@@ -67,6 +67,11 @@
     position: relative;
 }
 
+.readMore{
+    cursor: pointer;
+    color: #5e5e5e;
+}
+
 .viewImageButton {
     display: none;
     position: absolute;
@@ -131,6 +136,7 @@
 
     .viewImageButton {
         display: flex;
+        align-items: center;
     }
 
     .description {
