@@ -1,5 +1,6 @@
 import React from "react";
 import { GoScreenFull } from "react-icons/go";
+import { getImageUrl } from "@/data/apiUtils/imageUtils";
 import { ArtWorkProps } from "@/data/Interfaces";
 import styles from "@/Components/ArtWork/Artwork.module.css";
 import useImageViewStore from "@/data/store/useImageViewStore";
@@ -42,7 +43,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                 <div className={styles.imageContainer}>
                     <div
                         className={styles.imageBackground}
-                        style={{ backgroundImage: `url('https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg')` }}
+                        style={{ backgroundImage: `url('${getImageUrl(image_id)}')` }}
                     />
                     <div className={styles.titleContainer}>
                         <h1>{title && title.length > 80 ? title?.slice(0, 80) : title}</h1>
@@ -72,7 +73,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
             {
                 isImageOpen &&
                 <div className={styles.fullimageContainer} onClick={() => setIsImageOpen(!isImageOpen)}>
-                    <img src={`https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`} alt={title} />
+                    <img src={getImageUrl(image_id)} alt={title} />
                 </div>
             }
         </section>
