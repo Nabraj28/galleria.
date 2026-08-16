@@ -1,23 +1,28 @@
-import React, { useEffect, useRef, useCallback } from "react";
-import ArtWork from "@/Components/ArtWork";
 import Loader from "@/Components/Loader";
-import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks";
-import { RxTrackPrevious, RxTrackNext } from "react-icons/rx";
-import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
+import ArtWork from "@/Components/ArtWork";
 import styles from "./SlideShow.module.css";
-import useSlideShowIndexStore from "@/data/store/useSlideShowIndexStore";
-import usePlayPauseStore from "@/data/store/usePlayPauseStore";
 import useTimerStore from "@/data/store/useTimerStore";
+import { RxTrackPrevious, RxTrackNext } from "react-icons/rx";
+import React, { useEffect, useRef, useCallback } from "react";
+import usePlayPauseStore from "@/data/store/usePlayPauseStore";
+import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
+import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks";
+import useSlideShowIndexStore from "@/data/store/useSlideShowIndexStore";
 
 const SlideShow: React.FunctionComponent = () => {
 
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
     const { data, isLoading, error } = useGetArtWorks();
-    const { currentIndex, setCurrentIndex } = useSlideShowIndexStore();
+
     const artworks = data?.data || [];
+
+    const { currentIndex, setCurrentIndex } = useSlideShowIndexStore();
+
     const { isPlaying, setIsPlaying } = usePlayPauseStore();
-    const { setTimeRemaining } = useTimerStore()
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const countdownRef = useRef<NodeJS.Timeout | null>(null);
+
+    const { setTimeRemaining } = useTimerStore();
 
     const resetTimer = useCallback(() => {
         setTimeRemaining(15);

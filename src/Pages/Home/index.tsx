@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { NavLink } from "react-router";
-import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks.ts";
 import Loader from "@/Components/Loader";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import useUrlStore from "@/data/store/useUrlStore";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks.ts";
 
 
 const Home: React.FunctionComponent = () => {
@@ -30,7 +30,7 @@ const Home: React.FunctionComponent = () => {
                             <img
                                 className={styles.image}
                                 src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                                alt={""}
+                                alt={artwork.title}
                             />
                             <div className={styles.contentContainer}>
                                 <h3>{artwork.title.length > 100 ? artwork.title.slice(0, 100) : artwork.title}</h3>

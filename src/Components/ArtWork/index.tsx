@@ -1,11 +1,20 @@
-import styles from "@/Components/ArtWork/Artwork.module.css";
 import React from "react";
+import { GoScreenFull } from "react-icons/go";
 import { ArtWorkProps } from "@/data/Interfaces";
+import styles from "@/Components/ArtWork/Artwork.module.css";
 import useImageViewStore from "@/data/store/useImageViewStore";
 import useTextToggleStore from "@/data/store/useTextToggleStore";
-import { GoScreenFull } from "react-icons/go";
 
-const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, description, date_end, publication_history, provenance_text, exhibition_history, image_id }: ArtWorkProps) => {
+const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
+    title,
+    artist_title,
+    description,
+    date_end,
+    publication_history,
+    provenance_text,
+    exhibition_history,
+    image_id
+}) => {
 
     const { isImageOpen, setIsImageOpen } = useImageViewStore();
     const { isTextShown, setIsTextShown } = useTextToggleStore();
@@ -40,7 +49,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, d
                         <span>{artist_title}</span>
                     </div>
                     <button className={styles.viewImageButton} onClick={() => setIsImageOpen(!isImageOpen)}>
-                       <GoScreenFull color={'white'} size={25}/> View Image
+                        <GoScreenFull color={'white'} size={25} /> View Image
                     </button>
                 </div>
 
@@ -63,7 +72,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({ title, artist_title, d
             {
                 isImageOpen &&
                 <div className={styles.fullimageContainer} onClick={() => setIsImageOpen(!isImageOpen)}>
-                    <img src={`https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`} alt="" />
+                    <img src={`https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`} alt={title} />
                 </div>
             }
         </section>

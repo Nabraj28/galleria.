@@ -1,10 +1,10 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router';
-import AppLayout from './Layout/AppLayout';
 import Home from './Pages/Home';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ArtWork from "@/Pages/ArtWork";
 import SlideShow from "@/Pages/SlideShow";
+import AppLayout from './Layout/AppLayout';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App: React.FunctionComponent = () => {
 

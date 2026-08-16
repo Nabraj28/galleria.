@@ -1,8 +1,8 @@
-import { useParams } from "react-router";
 import React from "react";
+import { useParams } from "react-router";
 import Loader from "@/Components/Loader";
-import useGetSingleArtWork from "@/data/hooks/Artworks/useGetSingleArtWork.ts";
 import ArtWorkComponent from "@/Components/ArtWork";
+import useGetSingleArtWork from "@/data/hooks/Artworks/useGetSingleArtWork.ts";
 
 const ArtWork: React.FunctionComponent = () => {
 

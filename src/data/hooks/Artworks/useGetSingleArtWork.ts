@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/data/apiUtils";
+import { useQuery } from "@tanstack/react-query";
 import { singleArtworkType } from "@/data/Interfaces";
 
 
