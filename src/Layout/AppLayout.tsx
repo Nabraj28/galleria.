@@ -7,7 +7,7 @@ const AppLayout: React.FunctionComponent = () => {
     return (
         <main
             style={{
-                height: '100vh',
+                minHeight: '100vh',
                 position: 'relative',
             }}
         >
