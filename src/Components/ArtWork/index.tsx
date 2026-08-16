@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router";
 import { GoScreenFull } from "react-icons/go";
 import { ArtWorkProps } from "@/data/Interfaces";
@@ -29,7 +29,15 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
     const [isHovered, setIsHovered] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
+    const isPointerDevice = useRef(false);
+    useEffect(() => {
+        const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+        const smallScreen = window.innerWidth < 1000;
+        isPointerDevice.current = !coarsePointer && !smallScreen;
+    }, []);
+
     const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
+        if (!isPointerDevice.current) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -90,7 +98,6 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                         )}
                     </p>
 
-                    {/* Bottom-Right Controls */}
                     <div className={styles.bottomControls}>
                         {onPrev && (
                             <button
@@ -132,15 +139,14 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
 
             </div>
 
-            {/* Modal Image with hover pointing zoom */}
             {isImageOpen && (
                 <div className={styles.fullimageContainer} onClick={() => setIsImageOpen(false)}>
                     <div className={styles.zoomWrapper} onClick={(e) => e.stopPropagation()}>
                         <img
                             src={getImageUrl(image_id)}
                             alt={title}
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
+                            onMouseEnter={() => isPointerDevice.current && setIsHovered(true)}
+                            onMouseLeave={() => { setIsHovered(false); setMousePos({ x: 50, y: 50 }); }}
                             onMouseMove={handleMouseMove}
                             style={{
                                 transform: isHovered ? 'scale(1.8)' : 'scale(1)',

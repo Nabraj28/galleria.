@@ -45,7 +45,7 @@ const ArtWork: React.FunctionComponent = () => {
         if (currentIndex >= 0 && currentIndex < artworkIds.length - 1) {
             nextId = artworkIds[currentIndex + 1];
         } else if (currentIndex === artworkIds.length - 1) {
-            nextId = artworkIds[0]; // Loop to beginning
+            nextId = artworkIds[0];
         } else {
             nextId = artworkIds[1] || artworkIds[0];
         }

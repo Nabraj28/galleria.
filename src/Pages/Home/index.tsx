@@ -68,7 +68,6 @@ const Home: React.FunctionComponent = () => {
                 }
             </div>
 
-            {/* Infinite Scroll Sentinel */}
             <div ref={observerRef} className={styles.sentinel}>
                 {isFetchingNextPage && (
                     <div className={styles.loadingMore}>
