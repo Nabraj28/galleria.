@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     padding-bottom: 3rem;
-    /*position: relative;*/
 }
 
 .artWorkContainer {
@@ -13,20 +12,23 @@
     grid-template-columns: 1fr;
     min-height: 70vh;
     justify-content: center;
+    align-items: start;
 }
 
 .imageContainer {
-    position: relative;
     width: 100%;
     overflow: hidden;
+    position: relative;
 }
 
 .imageBackground {
     width: 100%;
+    position: relative;
     height: calc(10rem + 25vh);
     background-size: cover;
     border-radius: 1rem;
     background-position: center top;
+    background-color: #f0f0f0;
 }
 
 .titleContainer {
@@ -48,6 +50,7 @@
 .descriptionContainer {
     width: 100%;
     position: relative;
+    padding-bottom: 3.5rem;
 }
 
 .dateStyle {
@@ -67,13 +70,70 @@
     position: relative;
 }
 
-.readMore{
+.readMore {
     cursor: pointer;
     color: #5e5e5e;
 }
 
+.bottomControls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.bottomButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #a5a5a5;
+    font-family: var(--Libre-Regular), sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 0.5rem;
+    border-radius: 1rem;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.bottomButton:hover:not(:disabled) {
+    color: #111111;
+    transform: translateY(-2px);
+}
+
+.bottomButton:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    color: #cccccc;
+}
+
+.backButton {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #a5a5a5;
+    font-family: var(--Libre-Regular), sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 0.5rem;
+    border-radius: 1rem;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.backButton:hover {
+    color: #111111;
+    transform: translateY(-2px);
+}
+
 .viewImageButton {
-    display: none;
+    display: flex;
+    align-items: center;
     position: absolute;
     bottom: 5%;
     left: 5%;
@@ -87,7 +147,7 @@
 }
 
 .fullimageContainer {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -98,31 +158,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
-.fullimageContainer img {
+.zoomWrapper {
     max-width: 90%;
     max-height: 90%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zoomWrapper img {
+    max-width: 100%;
+    max-height: 85vh;
+    display: block;
+    object-fit: contain;
+    transition: transform 0.15s ease-out;
+    cursor: crosshair;
 }
 
 @media (min-width: 1000px) {
     .artWorkContainer {
         grid-template-columns: repeat(2, 1fr);
+        align-items: start;
     }
 
     .imageBackground {
         width: 90%;
         height: 100%;
         min-height: 70vh;
-        clip-path: polygon(
-                0% 0%,
+        clip-path: polygon(0% 0%,
                 50% 0%,
                 50% 50%,
                 100% 50%,
                 100% 100%,
-                0% 100%
-        );
+                0% 100%);
     }
 
     .titleContainer {
@@ -134,13 +206,7 @@
         text-align: right;
     }
 
-    .viewImageButton {
-        display: flex;
-        align-items: center;
-    }
-
     .description {
         padding-left: 8rem;
     }
-
 }

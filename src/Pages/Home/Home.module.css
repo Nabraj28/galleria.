@@ -21,6 +21,7 @@
     height: calc(10rem + 25vh);
     place-self:  center;
     overflow: hidden;
+    background-color: #f0f0f0;
 }
 
 .image {
@@ -60,26 +61,45 @@
     scale: 1.1;
 }
 
-.pageNavigationContainer{
-    padding-top: 2rem;
+.sentinel {
     width: 100%;
-    max-width: 90%;
+    min-height: 4rem;
     display: flex;
-    justify-content: end;
-    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
 }
 
-.navigationButton{
-    padding: 10px 20px;
-    border: none;
-    border-radius: 1rem;
-    cursor: pointer;
-    background-color: #e1e1e1;
+.loadingMore {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1.5vw, 1rem);
+    font-family: var(--Libre-Regular), sans-serif;
+    color: #767676;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    letter-spacing: 0.05em;
+}
 
-    &:disabled{
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
+.spinner {
+    width: clamp(20px, 2.5vw, 32px);
+    height: clamp(20px, 2.5vw, 32px);
+    border: 2px solid #e1e1e1;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+.errorContainer {
+    padding: 3rem;
+    text-align: center;
+    font-family: var(--Libre-Regular), sans-serif;
+    color: #888;
 }
 
 @media (min-width: 576px) {

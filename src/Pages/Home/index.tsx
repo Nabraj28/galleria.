@@ -1,61 +1,81 @@
-import React from "react";
 import styles from "./Home.module.css";
 import { NavLink } from "react-router";
 import Loader from "@/Components/Loader";
+import React, { useEffect, useRef } from "react";
 import { getImageUrl } from "@/data/apiUtils/imageUtils";
-import useUrlStore from "@/data/store/useUrlStore";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import useGetArtWorks from "@/data/hooks/Artworks/useGetArtWorks.ts";
-
+import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
+import useGetInfiniteArtworks from "@/data/hooks/Artworks/useGetInfiniteArtworks";
 
 const Home: React.FunctionComponent = () => {
+    const {
+        data,
+        isLoading,
+        error,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useGetInfiniteArtworks();
 
-    const { url, setUrl } = useUrlStore();
-    const { data, isLoading, error } = useGetArtWorks(url);
+    const { setArtworkIds } = useArtworkOrderStore();
+    const observerRef = useRef<HTMLDivElement | null>(null);
+
+    const allArtworks = data?.pages.flatMap((page) => page.data) || [];
+
+    useEffect(() => {
+        if (allArtworks.length > 0) {
+            setArtworkIds(allArtworks.map((item) => String(item.id)));
+        }
+    }, [allArtworks.length, setArtworkIds]);
+
+    useEffect(() => {
+        const sentinel = observerRef.current;
+        if (!sentinel) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+                    fetchNextPage();
+                }
+            },
+            { threshold: 0.1, rootMargin: '200px' }
+        );
+
+        observer.observe(sentinel);
+        return () => observer.disconnect();
+    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
     if (isLoading) return <Loader />;
-    if (error) return <div>Error...</div>;
-
-    const handleNavigation = (url?: string) => {
-        if (url) {
-            setUrl(url);
-        }
-    }
+    if (error) return <div className={styles.errorContainer}>Failed to load artworks. Please try again.</div>;
 
     return (
         <section className={styles.homeContainer}>
             <div className={styles.imageItemsContainer}>
                 {
-                    data?.data.map((artwork, index) => (
-                        <NavLink to={`/artwork/${artwork.id}`} key={index} className={styles.imageItem}>
+                    allArtworks.map((artwork, index) => (
+                        <NavLink to={`/artwork/${artwork.id}`} key={`${artwork.id}-${index}`} className={styles.imageItem}>
                             <img
                                 className={styles.image}
                                 src={getImageUrl(artwork.image_id)}
                                 alt={artwork.title}
+                                loading="lazy"
                             />
                             <div className={styles.contentContainer}>
-                                <h3>{artwork.title.length > 100 ? artwork.title.slice(0, 100) : artwork.title}</h3>
-                                <p>{artwork.artist_title}</p>
+                                <h3>{artwork.title && artwork.title.length > 100 ? artwork.title.slice(0, 100) : artwork.title}</h3>
+                                <p>{artwork.artist_title || 'Unknown Artist'}</p>
                             </div>
                         </NavLink>
                     ))
                 }
             </div>
-            <div className={styles.pageNavigationContainer}>
-                <button
-                    className={styles.navigationButton}
-                    onClick={() => handleNavigation(data?.pagination?.prev_url)}
-                    disabled={!data?.pagination?.prev_url}
-                >
-                    <MdChevronLeft size={25} color='black' />
-                </button>
-                <button
-                    className={styles.navigationButton}
-                    onClick={() => handleNavigation(data?.pagination?.next_url)}
-                    disabled={!data?.pagination?.next_url}
-                >
-                    <MdChevronRight size={25} color='black' />
-                </button>
+
+            {/* Infinite Scroll Sentinel */}
+            <div ref={observerRef} className={styles.sentinel}>
+                {isFetchingNextPage && (
+                    <div className={styles.loadingMore}>
+                        <div className={styles.spinner} />
+                        <span>Loading more artworks...</span>
+                    </div>
+                )}
             </div>
         </section>
     );

@@ -49,7 +49,6 @@ export interface artWorksType {
 }
 
 export interface ArtWorkProps {
-
     id?: string | undefined;
     title?: string | undefined;
     description?: string | undefined;
@@ -59,6 +58,10 @@ export interface ArtWorkProps {
     exhibition_history?: string | undefined;
     provenance_text?: string | undefined;
     image_id?: string | undefined;
+    onPrev?: () => void;
+    onNext?: () => void;
+    hasPrev?: boolean;
+    hasNext?: boolean;
 }
 
 
