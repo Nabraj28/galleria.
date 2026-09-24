@@ -1,28 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
+import { Daum } from "@/data/types";
 import { NavLink } from "react-router";
 import { GoScreenFull } from "react-icons/go";
-import { ArtWorkProps } from "@/data/Interfaces";
-import { getImageUrl } from "@/data/apiUtils/imageUtils";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "@/Components/ArtWork/Artwork.module.css";
 import useImageViewStore from "@/data/store/useImageViewStore";
 import useTextToggleStore from "@/data/store/useTextToggleStore";
 import { LuChevronLeft, LuChevronRight, LuLayoutGrid } from "react-icons/lu";
 
+export interface ArtWorkProps extends Partial<Daum> {
+    onPrev?: () => void;
+    onNext?: () => void;
+    hasPrev?: boolean;
+    hasNext?: boolean;
+}
+
 const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
     title,
-    artist_title,
+    creators,
     description,
-    date_end,
-    publication_history,
-    provenance_text,
-    exhibition_history,
-    image_id,
+    creation_date_latest,
+    citations,
+    provenance,
+    exhibitions,
+    images,
     onPrev,
     onNext,
     hasPrev,
     hasNext,
 }) => {
-
     const { isImageOpen, setIsImageOpen } = useImageViewStore();
     const { isTextShown, setIsTextShown } = useTextToggleStore();
 
@@ -44,6 +49,13 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
         setMousePos({ x, y });
     };
 
+    const artist_title = creators?.[0]?.description || 'Unknown Artist';
+    const imageUrl = images?.web?.url || '';
+
+    const publication_history = citations?.map(c => c.citation).join('\n');
+    const exhibition_history = exhibitions?.current?.map(e => e.title).join(', ');
+    const provenance_text = provenance?.map(p => p.description).join('\n');
+    
     const Description = description && description.length > 0
         ? description
         : publication_history && publication_history.length > 0
@@ -67,7 +79,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                 <div className={styles.imageContainer}>
                     <div
                         className={styles.imageBackground}
-                        style={{ backgroundImage: `url('${getImageUrl(image_id)}')` }}
+                        style={{ backgroundImage: `url('${imageUrl}')` }}
                     >
                         <button className={styles.viewImageButton} onClick={() => setIsImageOpen(!isImageOpen)}>
                             <GoScreenFull color={'white'} size={25} /> View Image
@@ -78,13 +90,13 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                             {title && title.length > 80 ? title.slice(0, 80) : title}
                         </h1>
                         <span>
-                            {artist_title || 'Unknown Artist'}
+                            {artist_title}
                         </span>
                     </div>
                 </div>
 
                 <div className={styles.descriptionContainer}>
-                    <p className={styles.dateStyle}>{date_end}</p>
+                    <p className={styles.dateStyle}>{creation_date_latest}</p>
 
                     <p className={styles.description}>
                         {descriptionText}
@@ -143,7 +155,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                 <div className={styles.fullimageContainer} onClick={() => setIsImageOpen(false)}>
                     <div className={styles.zoomWrapper} onClick={(e) => e.stopPropagation()}>
                         <img
-                            src={getImageUrl(image_id)}
+                            src={imageUrl}
                             alt={title}
                             onMouseEnter={() => isPointerDevice.current && setIsHovered(true)}
                             onMouseLeave={() => { setIsHovered(false); setMousePos({ x: 50, y: 50 }); }}

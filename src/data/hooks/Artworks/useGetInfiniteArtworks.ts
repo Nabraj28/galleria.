@@ -1,19 +1,23 @@
 import { getData } from "@/data/apiUtils";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { artWorksType } from "@/data/Interfaces";
+import { Root } from "@/data/types";
+
+const PAGE_SIZE = 24;
 
 const useGetInfiniteArtworks = () => {
-    return useInfiniteQuery<artWorksType>({
+    return useInfiniteQuery<Root>({
         queryKey: ['ArtworksInfinite'],
-        queryFn: ({ pageParam = 1 }) => {
-            return getData<artWorksType>(
-                `/artworks/search?query[exists][field]=image_id&page=${pageParam}&limit=24&fields=id,title,description,artist_title,date_end,publication_history,exhibition_history,provenance_text,image_id`
+        queryFn: ({ pageParam = 0 }) => {
+            return getData<Root>(
+                `/artworks?has_image=1&skip=${pageParam}&limit=${PAGE_SIZE}`
             );
         },
-        initialPageParam: 1,
+        initialPageParam: 0,
         getNextPageParam: (lastPage) => {
-            if (lastPage.pagination && lastPage.pagination.current_page < lastPage.pagination.total_pages) {
-                return lastPage.pagination.current_page + 1;
+            const { skip, limit } = lastPage.info.parameters;
+            const nextSkip = skip + limit;
+            if (nextSkip < lastPage.info.total) {
+                return nextSkip;
             }
             return undefined;
         },

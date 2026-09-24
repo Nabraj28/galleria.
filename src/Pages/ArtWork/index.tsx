@@ -1,10 +1,11 @@
+import ArtWorkComponent from "@/Components/ArtWork";
 import React, { useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router";
-import Loader from "@/Components/Loader";
-import ArtWorkComponent from "@/Components/ArtWork";
+import { ArtworkError } from "@/Components/ErrorState";
+import ArtworkSkeleton from "@/Components/SkeletonCard/ArtworkSkeleton";
+import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
 import useGetSingleArtWork from "@/data/hooks/Artworks/useGetSingleArtWork.ts";
 import useGetInfiniteArtworks from "@/data/hooks/Artworks/useGetInfiniteArtworks";
-import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
 
 const ArtWork: React.FunctionComponent = () => {
 
@@ -83,8 +84,8 @@ const ArtWork: React.FunctionComponent = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [goToPrev, goToNext, navigate]);
 
-    if (isLoading) return <Loader />;
-    if (error || !artwork) return <div style={{ padding: '3rem', textAlign: 'center' }}>Artwork not found.</div>;
+    if (isLoading) return <ArtworkSkeleton />;
+    if (error || !artwork) return <ArtworkError onRetry={() => window.location.reload()} />;
 
     return (
         <ArtWorkComponent

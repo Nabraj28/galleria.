@@ -1,8 +1,8 @@
 import styles from "./Home.module.css";
 import { NavLink } from "react-router";
-import Loader from "@/Components/Loader";
 import React, { useEffect, useRef } from "react";
-import { getImageUrl } from "@/data/apiUtils/imageUtils";
+import SkeletonGrid from "@/Components/SkeletonCard";
+import { GalleryError } from "@/Components/ErrorState";
 import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
 import useGetInfiniteArtworks from "@/data/hooks/Artworks/useGetInfiniteArtworks";
 
@@ -44,27 +44,38 @@ const Home: React.FunctionComponent = () => {
         return () => observer.disconnect();
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-    if (isLoading) return <Loader />;
-    if (error) return <div className={styles.errorContainer}>Failed to load artworks. Please try again.</div>;
+    if (isLoading) return (
+        <section className={styles.homeContainer}>
+            <div className={styles.imageItemsContainer}>
+                <SkeletonGrid count={12} />
+            </div>
+        </section>
+    );
+    if (error) return <GalleryError onRetry={() => window.location.reload()} />;
 
     return (
         <section className={styles.homeContainer}>
             <div className={styles.imageItemsContainer}>
                 {
-                    allArtworks.map((artwork, index) => (
-                        <NavLink to={`/artwork/${artwork.id}`} key={`${artwork.id}-${index}`} className={styles.imageItem}>
-                            <img
-                                className={styles.image}
-                                src={getImageUrl(artwork.image_id)}
-                                alt={artwork.title}
-                                loading="lazy"
-                            />
-                            <div className={styles.contentContainer}>
-                                <h3>{artwork.title && artwork.title.length > 100 ? artwork.title.slice(0, 100) : artwork.title}</h3>
-                                <p>{artwork.artist_title || 'Unknown Artist'}</p>
-                            </div>
-                        </NavLink>
-                    ))
+                    allArtworks.map((artwork, index) => {
+                        const artistTitle = artwork.creators?.[0]?.description || 'Unknown Artist';
+                        const imageUrl = artwork.images?.web?.url || '';
+
+                        return (
+                            <NavLink to={`/artwork/${artwork.accession_number}`} key={`${artwork.id}-${index}`} className={styles.imageItem}>
+                                <img
+                                    className={styles.image}
+                                    src={imageUrl}
+                                    alt={artwork.title}
+                                    loading="lazy"
+                                />
+                                <div className={styles.contentContainer}>
+                                    <h3>{artwork.title && artwork.title.length > 100 ? artwork.title.slice(0, 100) : artwork.title}</h3>
+                                    <p>{artistTitle}</p>
+                                </div>
+                            </NavLink>
+                        );
+                    })
                 }
             </div>
 

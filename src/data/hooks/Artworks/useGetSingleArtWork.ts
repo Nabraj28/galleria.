@@ -1,15 +1,13 @@
 import { getData } from "@/data/apiUtils";
 import { useQuery } from "@tanstack/react-query";
-import { singleArtworkType } from "@/data/Interfaces";
-
+import { SingleRoot } from "@/data/types";
 
 const useGetSingleArtWork = (id: string | undefined) => {
-
-    const endpoint = `/artworks/${id}?fields=id,title,description,artist_title,date_end,publication_history,exhibition_history,provenance_text,image_id`;
-    return useQuery<singleArtworkType>({
+    return useQuery<SingleRoot>({
         queryKey: ['Artworks', id],
-        queryFn: () => getData<singleArtworkType>(endpoint)
-    })
-}
+        queryFn: () => getData<SingleRoot>(`/artworks/${id}`),
+        enabled: !!id
+    });
+};
 
-export default useGetSingleArtWork
+export default useGetSingleArtWork;

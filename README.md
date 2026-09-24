@@ -18,7 +18,7 @@ npm run dev
 
 This project uses the following API(s):
 
-* Art Institute of Chicago API (https://api.artic.edu/docs/)
+* The Cleveland Museum of Art API (https://openaccess-api.clevelandart.org/)
 
 ## Technology Used
 * React.js
