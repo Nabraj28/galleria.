@@ -4,8 +4,10 @@ import { GoScreenFull } from "react-icons/go";
 import React, { useState, useEffect, useRef } from "react";
 import styles from "@/Components/ArtWork/Artwork.module.css";
 import { LuChevronLeft, LuChevronRight, LuLayoutGrid } from "react-icons/lu";
+import {PiSpinner} from "react-icons/pi";
 
 export interface ArtWorkProps extends Partial<Data> {
+    isFetchingNext: boolean;
     onPrev?: () => void;
     onNext?: () => void;
     hasPrev?: boolean;
@@ -24,6 +26,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = (props) => {
         onNext,
         hasPrev,
         hasNext,
+        isFetchingNext
     } = props;
 
     const [ isImageOpen, setIsImageOpen ] = useState(false);
@@ -125,7 +128,8 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = (props) => {
                                 aria-label="Next Artwork"
                             >
                                 <span>NEXT</span>
-                                <LuChevronRight size={18} />
+                                {isFetchingNext ? <PiSpinner size={18} />
+                                    : <LuChevronRight size={18} />}
                             </button>
                         )}
 

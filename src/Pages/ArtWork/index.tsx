@@ -14,7 +14,7 @@ const ArtWork: React.FunctionComponent = () => {
 
     const { data: artwork, isLoading, error } = useGetSingleArtWork(id);
 
-    const { nextAccessionNumber, prevAccessionNumber } = useArtworkNavigation(id);
+    const { getNextAccessionNumber, prevAccessionNumber, hasNext, isFetchingNext } = useArtworkNavigation(id);
 
     const goToPrev = useCallback(() => {
         if (prevAccessionNumber) {
@@ -23,12 +23,13 @@ const ArtWork: React.FunctionComponent = () => {
         }
     }, [prevAccessionNumber, navigate]);
 
-    const goToNext = useCallback(() => {
-        if (nextAccessionNumber) {
-            navigate(`/artwork/${nextAccessionNumber}`);
+    const goToNext = useCallback(async () => {
+        const next = await getNextAccessionNumber();
+        if (next) {
+            navigate(`/artwork/${next}`);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
-    }, [nextAccessionNumber, navigate]);
+    }, [getNextAccessionNumber, navigate]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,7 +55,8 @@ const ArtWork: React.FunctionComponent = () => {
             onPrev={goToPrev}
             onNext={goToNext}
             hasPrev={Boolean(prevAccessionNumber)}
-            hasNext={Boolean(nextAccessionNumber)}
+            hasNext={hasNext}
+            isFetchingNext={isFetchingNext}
         />
     );
 };
