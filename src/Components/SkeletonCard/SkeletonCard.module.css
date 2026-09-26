@@ -34,19 +34,18 @@
 
 .skeletonTitle {
     height: 1.2rem;
-    width: 80%;
+    width: 50%;
     background-color: #d0d0d0;
     border-radius: 0.25rem;
 }
 
 .skeletonArtist {
     height: 1rem;
-    width: 50%;
+    width: 80%;
     background-color: #d0d0d0;
     border-radius: 0.25rem;
 }
 
-/* Copying the grid properties from Home so skeletons layout perfectly */
 @media (min-width: 576px) {
     .skeletonItem {
         width: 100%;

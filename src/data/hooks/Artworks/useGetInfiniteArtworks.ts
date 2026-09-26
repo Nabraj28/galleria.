@@ -1,14 +1,14 @@
 import { getData } from "@/data/apiUtils";
+import { ArtworkResponse } from "@/data/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Root } from "@/data/types";
 
 const PAGE_SIZE = 24;
 
 const useGetInfiniteArtworks = () => {
-    return useInfiniteQuery<Root>({
+    return useInfiniteQuery<ArtworkResponse>({
         queryKey: ['ArtworksInfinite'],
         queryFn: ({ pageParam = 0 }) => {
-            return getData<Root>(
+            return getData<ArtworkResponse>(
                 `/artworks?has_image=1&skip=${pageParam}&limit=${PAGE_SIZE}`
             );
         },

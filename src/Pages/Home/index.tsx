@@ -3,7 +3,6 @@ import { NavLink } from "react-router";
 import React, { useEffect, useRef } from "react";
 import SkeletonGrid from "@/Components/SkeletonCard";
 import { GalleryError } from "@/Components/ErrorState";
-import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
 import useGetInfiniteArtworks from "@/data/hooks/Artworks/useGetInfiniteArtworks";
 
 const Home: React.FunctionComponent = () => {
@@ -16,16 +15,9 @@ const Home: React.FunctionComponent = () => {
         isFetchingNextPage
     } = useGetInfiniteArtworks();
 
-    const { setArtworkIds } = useArtworkOrderStore();
     const observerRef = useRef<HTMLDivElement | null>(null);
 
     const allArtworks = data?.pages.flatMap((page) => page.data) || [];
-
-    useEffect(() => {
-        if (allArtworks.length > 0) {
-            setArtworkIds(allArtworks.map((item) => String(item.id)));
-        }
-    }, [allArtworks.length, setArtworkIds]);
 
     useEffect(() => {
         const sentinel = observerRef.current;
@@ -47,7 +39,7 @@ const Home: React.FunctionComponent = () => {
     if (isLoading) return (
         <section className={styles.homeContainer}>
             <div className={styles.imageItemsContainer}>
-                <SkeletonGrid count={12} />
+                <SkeletonGrid count={16} />
             </div>
         </section>
     );

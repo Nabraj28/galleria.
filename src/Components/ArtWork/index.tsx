@@ -1,35 +1,33 @@
-import { Daum } from "@/data/types";
+import { Data } from "@/data/types";
 import { NavLink } from "react-router";
 import { GoScreenFull } from "react-icons/go";
 import React, { useState, useEffect, useRef } from "react";
 import styles from "@/Components/ArtWork/Artwork.module.css";
-import useImageViewStore from "@/data/store/useImageViewStore";
-import useTextToggleStore from "@/data/store/useTextToggleStore";
 import { LuChevronLeft, LuChevronRight, LuLayoutGrid } from "react-icons/lu";
 
-export interface ArtWorkProps extends Partial<Daum> {
+export interface ArtWorkProps extends Partial<Data> {
     onPrev?: () => void;
     onNext?: () => void;
     hasPrev?: boolean;
     hasNext?: boolean;
 }
 
-const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
-    title,
-    creators,
-    description,
-    creation_date_latest,
-    citations,
-    provenance,
-    exhibitions,
-    images,
-    onPrev,
-    onNext,
-    hasPrev,
-    hasNext,
-}) => {
-    const { isImageOpen, setIsImageOpen } = useImageViewStore();
-    const { isTextShown, setIsTextShown } = useTextToggleStore();
+const ArtWork: React.FunctionComponent<ArtWorkProps> = (props) => {
+
+    const {
+        title,
+        creators,
+        description,
+        creation_date_latest,
+        images,
+        onPrev,
+        onNext,
+        hasPrev,
+        hasNext,
+    } = props;
+
+    const [ isImageOpen, setIsImageOpen ] = useState(false);
+    const [ isTextShown, setIsTextShown ] = useState(false);
 
     const [isHovered, setIsHovered] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
@@ -52,18 +50,7 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
     const artist_title = creators?.[0]?.description || 'Unknown Artist';
     const imageUrl = images?.web?.url || '';
 
-    const publication_history = citations?.map(c => c.citation).join('\n');
-    const exhibition_history = exhibitions?.current?.map(e => e.title).join(', ');
-    const provenance_text = provenance?.map(p => p.description).join('\n');
-    
-    const Description = description && description.length > 0
-        ? description
-        : publication_history && publication_history.length > 0
-            ? publication_history
-            : exhibition_history && exhibition_history.length > 0
-                ? provenance_text : 'No description available';
-
-    const cleanDescription = Description?.replace(/<\/?p>/g, '').replace(/<\/?em>/g, '');
+    const cleanDescription = description?.replace(/<\/?p>/g, '').replace(/<\/?em>/g, '');
     const descriptionText = cleanDescription && (isTextShown || cleanDescription.length <= 1000
         ? cleanDescription
         : `${cleanDescription.slice(0, 1000)}...`);
@@ -81,7 +68,10 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                         className={styles.imageBackground}
                         style={{ backgroundImage: `url('${imageUrl}')` }}
                     >
-                        <button className={styles.viewImageButton} onClick={() => setIsImageOpen(!isImageOpen)}>
+                        <button
+                            className={styles.viewImageButton}
+                            onClick={() => setIsImageOpen(!isImageOpen)}
+                        >
                             <GoScreenFull color={'white'} size={25} /> View Image
                         </button>
                     </div>
@@ -96,7 +86,9 @@ const ArtWork: React.FunctionComponent<ArtWorkProps> = ({
                 </div>
 
                 <div className={styles.descriptionContainer}>
-                    <p className={styles.dateStyle}>{creation_date_latest}</p>
+                    <p className={styles.dateStyle}>
+                        {creation_date_latest}
+                    </p>
 
                     <p className={styles.description}>
                         {descriptionText}

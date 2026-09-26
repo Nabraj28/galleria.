@@ -3,9 +3,8 @@ import React, { useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router";
 import { ArtworkError } from "@/Components/ErrorState";
 import ArtworkSkeleton from "@/Components/SkeletonCard/ArtworkSkeleton";
-import useArtworkOrderStore from "@/data/store/useArtworkOrderStore";
 import useGetSingleArtWork from "@/data/hooks/Artworks/useGetSingleArtWork.ts";
-import useGetInfiniteArtworks from "@/data/hooks/Artworks/useGetInfiniteArtworks";
+import {useArtworkNavigation} from "@/data/hooks/Artworks/useArtworkNavigation.ts";
 
 const ArtWork: React.FunctionComponent = () => {
 
@@ -13,61 +12,23 @@ const ArtWork: React.FunctionComponent = () => {
 
     const navigate = useNavigate();
 
-    const { data, isLoading, error } = useGetSingleArtWork(id);
-    const artwork = data?.data;
+    const { data: artwork, isLoading, error } = useGetSingleArtWork(id);
 
-    const { data: infiniteData } = useGetInfiniteArtworks();
-
-    const { artworkIds, setArtworkIds } = useArtworkOrderStore();
-
-    useEffect(() => {
-        if (artworkIds.length === 0 && infiniteData?.pages) {
-            const ids = infiniteData.pages.flatMap((page) => page.data).map((item) => String(item.id));
-            if (ids.length > 0) {
-                setArtworkIds(ids);
-            }
-        }
-    }, [artworkIds.length, infiniteData, setArtworkIds]);
-
-    const currentIndex = id ? artworkIds.indexOf(String(id)) : -1;
-
-    let prevId: string | null = null;
-    let nextId: string | null = null;
-
-    if (artworkIds.length > 1) {
-        if (currentIndex > 0) {
-            prevId = artworkIds[currentIndex - 1];
-        } else if (currentIndex === 0) {
-            prevId = artworkIds[artworkIds.length - 1];
-        } else {
-            prevId = artworkIds[0];
-        }
-
-        if (currentIndex >= 0 && currentIndex < artworkIds.length - 1) {
-            nextId = artworkIds[currentIndex + 1];
-        } else if (currentIndex === artworkIds.length - 1) {
-            nextId = artworkIds[0];
-        } else {
-            nextId = artworkIds[1] || artworkIds[0];
-        }
-    } else if (artworkIds.length === 1 && currentIndex === -1) {
-        prevId = artworkIds[0];
-        nextId = artworkIds[0];
-    }
+    const { nextAccessionNumber, prevAccessionNumber } = useArtworkNavigation(id);
 
     const goToPrev = useCallback(() => {
-        if (prevId) {
-            navigate(`/artwork/${prevId}`);
+        if (prevAccessionNumber) {
+            navigate(`/artwork/${prevAccessionNumber}`);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
-    }, [prevId, navigate]);
+    }, [prevAccessionNumber, navigate]);
 
     const goToNext = useCallback(() => {
-        if (nextId) {
-            navigate(`/artwork/${nextId}`);
+        if (nextAccessionNumber) {
+            navigate(`/artwork/${nextAccessionNumber}`);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
-    }, [nextId, navigate]);
+    }, [nextAccessionNumber, navigate]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -92,8 +53,8 @@ const ArtWork: React.FunctionComponent = () => {
             {...artwork}
             onPrev={goToPrev}
             onNext={goToNext}
-            hasPrev={Boolean(prevId)}
-            hasNext={Boolean(nextId)}
+            hasPrev={Boolean(prevAccessionNumber)}
+            hasNext={Boolean(nextAccessionNumber)}
         />
     );
 };

@@ -1,6 +1,6 @@
-export interface Root {
+export interface ArtworkResponse {
     info: Info
-    data: Daum[]
+    data: Data[]
 }
 
 export interface Info {
@@ -14,7 +14,7 @@ export interface Parameters {
     select: string
 }
 
-export interface Daum {
+export interface Data {
     id: number
     accession_number: string
     share_license_status: string
@@ -27,24 +27,24 @@ export interface Daum {
     artists_tags: string[]
     culture: string[]
     technique: string
-    support_materials: any[]
+    support_materials: unknown[]
     department: string
     collection: string
     type: string
     measurements: string
     dimensions: Dimensions
-    state_of_the_work: any
-    edition_of_the_work: any
-    copyright: any
-    inscriptions: any[]
+    state_of_the_work: unknown
+    edition_of_the_work: unknown
+    copyright: unknown
+    inscriptions: unknown[]
     exhibitions: Exhibitions
     provenance: Provenance[]
-    find_spot: any
-    related_works: any[]
+    find_spot: unknown
+    related_works: unknown[]
     former_accession_numbers: string[]
     did_you_know: string
-    early_education_description: any
-    artlens_description: any
+    early_education_description: unknown
+    artlens_description: unknown
     description: string
     external_resources: ExternalResources
     citations: Citation[]
@@ -52,27 +52,27 @@ export interface Daum {
     images: Images
     alternate_images: AlternateImage[]
     creditline: string
-    image_credit: any
-    sketchfab_id: any
-    sketchfab_url: any
+    image_credit: unknown
+    sketchfab_id: unknown
+    sketchfab_url: unknown
     gallery_donor_text: string
     athena_id: number
     creators: Creator[]
     legal_status: string
     accession_date: string
     sortable_date: number
-    date_added_to_oa: any
+    date_added_to_oa: unknown
     date_text: string
     collapse_artists: boolean
     on_loan: boolean
     recently_acquired: boolean
     record_type: string
-    conservation_statement: any
+    conservation_statement: unknown
     has_conservation_images: boolean
-    cover_accession_number: any
+    cover_accession_number: unknown
     is_nazi_era_provenance: boolean
-    impression: any
-    alternate_titles: any[]
+    impression: unknown
+    alternate_titles: unknown[]
     is_highlight: boolean
     updated_at: string
 }
@@ -122,10 +122,10 @@ export interface Legacy {
 
 export interface Provenance {
     description: string
-    citations: any[]
-    footnotes: any[]
+    citations: unknown[]
+    footnotes: unknown[]
     date: string
-    sortorder: any
+    sortorder: unknown
 }
 
 export interface ExternalResources {
@@ -202,18 +202,14 @@ export interface Full2 {
 export interface Creator {
     id: number
     description: string
-    extent: any
-    qualifier: any
+    extent: unknown
+    qualifier: unknown
     role: string
-    biography: any
-    name_in_original_language: any
+    biography: unknown
+    name_in_original_language: unknown
     birth_year: string
     death_year: string
     use_in_caption: boolean
     include_extent: boolean
     weight: number
-}
-
-export interface SingleRoot {
-    data: Daum
 }
