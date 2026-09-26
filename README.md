@@ -26,4 +26,3 @@ This project uses the following API(s):
 * Axios
 * Tanstack Query
 * Custom Hooks
-* Zustand
